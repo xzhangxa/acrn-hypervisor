@@ -7,9 +7,6 @@
 #include <types.h>
 #include <rtl.h>
 
-/*
- * Convert a string to a long integer - decimal support only.
- */
 int64_t strtol_deci(const char *nptr)
 {
 	const char *s = nptr;
@@ -18,7 +15,7 @@ int64_t strtol_deci(const char *nptr)
 	int32_t neg = 0, any;
 	uint64_t base = 10UL;
 
-	/*
+	/**
 	 * Skip white space and pick up leading +/- sign if any.
 	 */
 	do {
@@ -34,10 +31,10 @@ int64_t strtol_deci(const char *nptr)
 		c = *s;
 		s++;
 	} else {
-		/* No sign character. */
+		/** No sign character. */
 	}
 
-	/*
+	/**
 	 * Compute the cutoff value between legal numbers and illegal
 	 * numbers.  That is the largest legal value, divided by the
 	 * base.  An input number that is greater than this value, if
@@ -80,8 +77,10 @@ int64_t strtol_deci(const char *nptr)
 	} else if (neg != 0) {
 		acc = ~acc + 1UL;
 	} else {
-		/* There is no overflow and no leading '-' exists. In such case
-		 * acc already holds the right number. No action required. */
+		/**
+		 * There is no overflow and no leading '-' exists. In such case
+		 * acc already holds the right number. No action required.
+		 */
 	}
 	return (long)acc;
 }

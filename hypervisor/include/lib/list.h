@@ -30,6 +30,18 @@
 
 #include <types.h>
 
+/**
+ * @addtogroup lib_util
+ *
+ * @{
+ */
+
+/**
+ * @file
+ *
+ * @brief This file declares the list operation macros and inline functions provided by lib.utils module.
+ */
+
 struct list_head {
 	struct list_head *next, *prev;
 };
@@ -156,5 +168,9 @@ hlist_add_head(struct hlist_node *n, struct hlist_head *h)
 
 #define hlist_for_each(pos, head) \
 	for ((pos) = (head)->first; (pos) != NULL; (pos) = (pos)->next)
+
+/**
+ * @}
+ */
 
 #endif /* LIST_H_ */

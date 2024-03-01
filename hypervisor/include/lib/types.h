@@ -7,6 +7,18 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+/**
+ * @addtogroup lib_util
+ *
+ * @{
+ */
+
+/**
+ * @file
+ *
+ * @brief This file declares the type definitions and macros provided by lib.utils module.
+ */
+
 #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
 #define __aligned(x)		__attribute__((aligned(x)))
 #define __packed	__attribute__((packed))
@@ -14,7 +26,8 @@
 
 #ifndef ASSEMBLER
 
-/* Define standard data types.  These definitions allow software components
+/**
+ * Define standard data types. These definitions allow software components
  * to perform in the same manner on different target platforms.
  */
 typedef signed char int8_t;
@@ -48,5 +61,9 @@ typedef _Bool bool;
 #endif
 
 #endif /* ASSEMBLER */
+
+/**
+ * @}
+ */
 
 #endif /* INCLUDE_TYPES_H defined */

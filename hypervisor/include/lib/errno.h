@@ -7,6 +7,18 @@
 #ifndef ERRNO_H
 #define ERRNO_H
 
+/**
+ * @addtogroup lib_util
+ *
+ * @{
+ */
+
+/**
+ * @file
+ *
+ * @brief This file declares the errno macros provided by lib.utils module.
+ */
+
 /** Indicates that operation not permitted. */
 #define EPERM		1
 /** Indicates that there is IO error. */
@@ -29,5 +41,9 @@
 #define ENOSYS		38
 /** Indicates that timeout occurs. */
 #define ETIMEDOUT	110
+
+/**
+ * @}
+ */
 
 #endif /* ERRNO_H */
