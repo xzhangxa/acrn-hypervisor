@@ -129,13 +129,13 @@ static inline bool msicap_access(const struct pci_vdev *vdev, uint32_t offset)
 }
 
 /**
- * @brief Check if the specified vdev is a zombie VF instance
+ * @brief Check if the specified vdev is a zombie VF instance.
  *
- * @pre: The vdev is a VF instance
+ * @param vdev Pointer to vdev instance.
  *
- * @param vdev Pointer to vdev instance
+ * @return If the vdev is a zombie VF instance return true, otherwise return false.
  *
- * @return If the vdev is a zombie VF instance return true, otherwise return false
+ * @pre: The vdev is a VF instance.
  */
 static inline bool is_zombie_vf(const struct pci_vdev *vdev)
 {
@@ -173,6 +173,17 @@ uint32_t sriov_bar_offset(const struct pci_vdev *vdev, uint32_t bar_idx);
 
 uint32_t pci_vdev_read_vcfg(const struct pci_vdev *vdev, uint32_t offset, uint32_t bytes);
 void pci_vdev_write_vcfg(struct pci_vdev *vdev, uint32_t offset, uint32_t bytes, uint32_t val);
+
+/**
+ * @brief Add emulated legacy PCI capability support for virtual PCI device
+ *
+ * @param[in,out] vdev Pointer to vdev data structure
+ * @param[in] capdata  Pointer to buffer that holds the capability data to be added.
+ * @param[in] caplen   Length of buffer that holds the capability data to be added.
+ *
+ * @pre vdev != NULL
+ * @pre vdev->vpci != NULL
+ */
 uint32_t vpci_add_capability(struct pci_vdev *vdev, uint8_t *capdata, uint8_t caplen);
 
 void pci_vdev_write_vbar(struct pci_vdev *vdev, uint32_t idx, uint32_t val);
@@ -181,7 +192,34 @@ void vdev_pt_hide_sriov_cap(struct pci_vdev *vdev);
 
 int32_t check_pt_dev_pio_bars(struct pci_vdev *vdev);
 
+/**
+ * @brief Function pointer typedef of PCI BAR map/unmap functions.
+ *
+ * These two function pointers define the vpci_update_one_vbar() arguments of PCI BAR map/unmap callbacks.
+ */
 typedef void (*map_pcibar)(struct pci_vdev *vdev, uint32_t bar_idx);
 typedef void (*unmap_pcibar)(struct pci_vdev *vdev, uint32_t bar_idx);
+
+/*
+ * @brief Update one BAR of the input virual PCI device.
+ *
+ * The purpose of this function is to remap the target BAR address of the input PCI device with pre/post
+ * processing around updating the Base Address. The \a unmap_cb callback should be provided and will be called before
+ * updating the BAR Base Address. The \a map_cb callback will be called after updating the BAR Base Address if the
+ * callback exists.
+ *
+ * @param[in,out] vdev The target virtual PCI device.
+ * @param[in] bar_idx  The target BAR's index.
+ * @param[in] val      The value to be written to the target BAR's Base Address.
+ * @param[in] map_cb   The map callback for the target BAR.
+ * @param[in] unmap_cb The unmap callback for the target BAR.
+ *
+ * @return N/A
+ *
+ * @pre unmap_cb != NULL
+ *
+ * @post vdev->vbars[bar_idx] (or vdev->vbars[bar_idx - 1] if vdev->vbars[bar_idx]->is_mem64hi == TRUE) is updated.
+ */
 void vpci_update_one_vbar(struct pci_vdev *vdev, uint32_t bar_idx, uint32_t val, map_pcibar map_cb, unmap_pcibar unmap_cb);
+
 #endif /* VPCI_PRIV_H_ */

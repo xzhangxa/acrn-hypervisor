@@ -37,6 +37,18 @@
 #include "vpci_priv.h"
 
 /**
+ * @addtogroup vp-dm_vperipheral
+ *
+ * @{
+ */
+
+/**
+ * @file
+ *
+ * @brief This file implements all virtual device SR-IOV APIs that shall be provided by vPCI component.
+ */
+
+/**
  * @pre pf_vdev != NULL
  */
 static inline uint8_t get_vf_devfun(const struct pci_vdev *pf_vdev, uint16_t fst_off, uint16_t stride, uint16_t id)
@@ -346,3 +358,7 @@ uint32_t sriov_bar_offset(const struct pci_vdev *vdev, uint32_t bar_idx)
 {
 	return (vdev->sriov.capoff + PCIR_SRIOV_VF_BAR_OFF + (bar_idx << 2U));
 }
+
+/**
+ * @}
+ */
