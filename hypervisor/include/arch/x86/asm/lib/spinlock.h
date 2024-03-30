@@ -27,8 +27,8 @@ static inline void spinlock_init(spinlock_t *lock)
 
 static inline void spinlock_obtain(spinlock_t *lock)
 {
-
-	/* The lock function atomically increments and exchanges the head
+	/**
+         * The lock function atomically increments and exchanges the head
 	 * counter of the queue. If the old head of the queue is equal to the
 	 * tail, we have locked the spinlock. Otherwise we have to wait.
 	 */

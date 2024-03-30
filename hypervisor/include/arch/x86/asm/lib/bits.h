@@ -36,11 +36,10 @@
  * bit operations function can't find bit set and return
  * the invalid bit index directly.
  *
- **/
+ */
 #define INVALID_BIT_INDEX  0xffffU
 
 /*
- *
  * fls32 - Find the Last (most significant) bit Set in value and
  *       return the bit index of that bit.
  *
@@ -85,7 +84,6 @@ static inline uint16_t fls64(uint64_t value)
 }
 
 /*
- *
  * ffs64 - Find the First (least significant) bit Set in value(Long type)
  * and return the index of that bit.
  *
