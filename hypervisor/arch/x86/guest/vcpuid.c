@@ -306,7 +306,8 @@ static int32_t set_vcpuid_extfeat(struct acrn_vm *vm)
 	}
 
 	if ((cr4_reserved_mask & CR4_PKE) != 0UL) {
-		entry.ecx &= ~CPUID_ECX_PKE;
+		entry.ecx &= ~CPUID_ECX_PKU;
+		entry.ecx &= ~CPUID_ECX_OSPKE;
 	}
 
 	if ((cr4_reserved_mask & CR4_LA57) != 0UL) {
@@ -661,6 +662,7 @@ static void guest_cpuid_0dh(__unused struct acrn_vcpu *vcpu, uint32_t *eax, uint
 			 * CPUID.(EAX=0DH,ECX=0):EAX[3] and
 			 * CPUID.(EAX=0DH,ECX=0):EAX[4] will both be 0 */
 			*eax &= ~(CPUID_EAX_XCR0_BNDREGS | CPUID_EAX_XCR0_BNDCSR);
+			*eax &= ~CPUID_EAX_XCR0_PKRU;
 			break;
 		case 1U:
 			*ecx &= ~(CPUID_ECX_CET_U_STATE | CPUID_ECX_CET_S_STATE);

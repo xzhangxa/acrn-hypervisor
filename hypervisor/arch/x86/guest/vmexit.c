@@ -382,13 +382,16 @@ static int32_t xsetbv_vmexit_handler(struct acrn_vcpu *vcpu)
 					 * to use AVX instructions.
 					 */
 					if ((val64 & (XCR0_SSE | XCR0_AVX)) != XCR0_AVX) {
-						/*
-						 * SDM Vol.1 13-4, XCR0[4:3] are associated with MPX state,
-						 * Guest should not set these two bits without MPX support.
-						 */
-						if ((val64 & (XCR0_BNDREGS | XCR0_BNDCSR)) == 0UL) {
-							write_xcr(0, val64);
-							ret = 0;
+						/* XCR0[9] (PKRU state) can't be set since no support for PKRU. */
+						if ((val64 & XCR0_PKRU) == 0UL) {
+							/*
+							 * SDM Vol.1 13-4, XCR0[4:3] are associated with MPX state,
+							 * Guest should not set these two bits without MPX support.
+							 */
+							if ((val64 & (XCR0_BNDREGS | XCR0_BNDCSR)) == 0UL) {
+								write_xcr(0, val64);
+								ret = 0;
+							}
 						}
 					}
 				}
