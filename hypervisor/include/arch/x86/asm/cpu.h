@@ -99,6 +99,8 @@
 #define XCR0_BNDREGS		(1UL<<3U)
 /* XCR0_BNDCSR */
 #define XCR0_BNDCSR		(1UL<<4U)
+/* XCR0_PKRU */
+#define XCR0_PKRU		(1UL<<9U)
 /* According to SDM Vol1 13.3:
  *   XCR0[63:10] and XCR0[8] are reserved. Executing the XSETBV instruction causes
  *   a general-protection fault if ECX = 0 and any corresponding bit in EDX:EAX
